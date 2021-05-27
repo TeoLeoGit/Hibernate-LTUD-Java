@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="pojo.CreatedCourseInfo" table="coursescreate" schema="coursesregistrationdb">
+        <composite-id mapped="true" >
+            <key-property name="ministryid">
+                <column name="ministryid" sql-type="int unsigned"/>
+            </key-property>
+            <key-property name="courseid">
+                <column name="courseid" sql-type="int unsigned"/>
+            </key-property>
+        </composite-id>
+        <property name="createdate">
+            <column name="createdate" sql-type="date"/>
+        </property>
+    </class>
+</hibernate-mapping>

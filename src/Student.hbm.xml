@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="pojo.Student" table="students" schema="coursesregistrationdb">
+        <id name="id">
+            <column name="id" sql-type="int unsigned"/>
+        </id>
+        <property name="studentid">
+            <column name="studentid" sql-type="int unsigned" not-null="true"/>
+        </property>
+        <property name="firstname">
+            <column name="firstname" sql-type="varchar(30)" length="30"/>
+        </property>
+        <property name="lastname">
+            <column name="lastname" sql-type="varchar(30)" length="30"/>
+        </property>
+        <property name="dayofbirth">
+            <column name="dayofbirth" sql-type="date"/>
+        </property>
+        <property name="email">
+            <column name="email" sql-type="varchar(30)" length="30" not-null="true"/>
+        </property>
+        <property name="address">
+            <column name="address" sql-type="varchar(30)" length="30" not-null="true"/>
+        </property>
+        <property name="phone">
+            <column name="phone" sql-type="char(10)" length="10" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

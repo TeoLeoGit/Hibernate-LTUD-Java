@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="pojo.Semester" table="semesters" schema="coursesregistrationdb">
+        <id name="id">
+            <column name="id" sql-type="int unsigned"/>
+        </id>
+        <property name="semestername">
+            <column name="semestername" sql-type="varchar(30)" length="30"/>
+        </property>
+        <property name="semesteryear">
+            <column name="semesteryear" sql-type="year" not-null="true"/>
+        </property>
+        <property name="startdate">
+            <column name="startdate" sql-type="date" not-null="true"/>
+        </property>
+        <property name="enddate">
+            <column name="enddate" sql-type="date" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>
