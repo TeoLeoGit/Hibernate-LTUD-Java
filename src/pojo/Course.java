@@ -3,8 +3,6 @@ package pojo;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
-//@Table(name = "courses", schema = "coursesregistrationdb", catalog = "")
 public class Course {
     private int id;
     private String teachername;
@@ -12,8 +10,6 @@ public class Course {
     private String dayofweek;
     private String shift;
 
-    @Id
-    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -22,8 +18,6 @@ public class Course {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "teachername", nullable = false, length = 30)
     public String getTeachername() {
         return teachername;
     }
@@ -32,8 +26,6 @@ public class Course {
         this.teachername = teachername;
     }
 
-    @Basic
-    @Column(name = "classroom", nullable = false, length = 20)
     public String getClassroom() {
         return classroom;
     }
@@ -42,8 +34,6 @@ public class Course {
         this.classroom = classroom;
     }
 
-    @Basic
-    @Column(name = "dayofweek", nullable = false, length = 10)
     public String getDayofweek() {
         return dayofweek;
     }
@@ -52,8 +42,6 @@ public class Course {
         this.dayofweek = dayofweek;
     }
 
-    @Basic
-    @Column(name = "shift", nullable = false, length = 20)
     public String getShift() {
         return shift;
     }
@@ -62,7 +50,6 @@ public class Course {
         this.shift = shift;
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -70,7 +57,6 @@ public class Course {
         return Objects.equals(id, course.id) && Objects.equals(teachername, course.teachername) && Objects.equals(classroom, course.classroom) && Objects.equals(dayofweek, course.dayofweek) && Objects.equals(shift, course.shift);
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(id, teachername, classroom, dayofweek, shift);
     }

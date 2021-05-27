@@ -3,16 +3,12 @@ package pojo;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
-//@Table(name = "accounts", schema = "coursesregistrationdb", catalog = "")
 public class Account {
     private int id;
     private String username;
     private String password;
     private Integer type;
 
-    @Id
-    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -21,8 +17,6 @@ public class Account {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "username", nullable = false, length = 30)
     public String getUsername() {
         return username;
     }
@@ -31,8 +25,6 @@ public class Account {
         this.username = username;
     }
 
-    @Basic
-    @Column(name = "userpw", nullable = false, length = 30)
     public String getPassword() {
         return password;
     }
@@ -41,8 +33,6 @@ public class Account {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "usertype", nullable = true)
     public Integer getType() {
         return type;
     }
@@ -51,7 +41,6 @@ public class Account {
         this.type = usertype;
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -61,7 +50,6 @@ public class Account {
 
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(id, username, password, type);
     }

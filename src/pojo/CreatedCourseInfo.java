@@ -4,16 +4,11 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 
-@Entity
-//@Table(name = "coursescreate", schema = "coursesregistrationdb", catalog = "")
-//@IdClass(CreatedCourseInfoPK.class)
 public class CreatedCourseInfo {
     private int ministryid;
     private int courseid;
     private Date createdate;
 
-    @Id
-    @Column(name = "ministryid", nullable = false)
     public int getMinistryid() {
         return ministryid;
     }
@@ -22,8 +17,6 @@ public class CreatedCourseInfo {
         this.ministryid = ministryid;
     }
 
-    @Id
-    @Column(name = "courseid", nullable = false)
     public int getCourseid() {
         return courseid;
     }
@@ -32,8 +25,6 @@ public class CreatedCourseInfo {
         this.courseid = courseid;
     }
 
-    @Basic
-    @Column(name = "createdate", nullable = false)
     public Date getCreatedate() {
         return createdate;
     }
@@ -42,7 +33,6 @@ public class CreatedCourseInfo {
         this.createdate = createdate;
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -50,7 +40,6 @@ public class CreatedCourseInfo {
         return Objects.equals(ministryid, that.ministryid) && Objects.equals(courseid, that.courseid) && Objects.equals(createdate, that.createdate);
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(ministryid, courseid, createdate);
     }

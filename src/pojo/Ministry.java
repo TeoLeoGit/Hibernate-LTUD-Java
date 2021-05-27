@@ -4,8 +4,6 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 
-@Entity
-//@Table(name = "ministries", schema = "coursesregistrationdb", catalog = "")
 public class Ministry {
     private int id;
     private int ministryid;
@@ -16,8 +14,6 @@ public class Ministry {
     private String address;
     private String phone;
 
-    @Id
-    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -26,8 +22,6 @@ public class Ministry {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "ministryid", nullable = true)
     public int getMinistryid() {
         return ministryid;
     }
@@ -36,8 +30,6 @@ public class Ministry {
         this.ministryid = ministryid;
     }
 
-    @Basic
-    @Column(name = "firstname", nullable = false, length = 30)
     public String getFirstname() {
         return firstname;
     }
@@ -46,8 +38,6 @@ public class Ministry {
         this.firstname = firstname;
     }
 
-    @Basic
-    @Column(name = "lastname", nullable = false, length = 30)
     public String getLastname() {
         return lastname;
     }
@@ -56,8 +46,6 @@ public class Ministry {
         this.lastname = lastname;
     }
 
-    @Basic
-    @Column(name = "dayofbirth", nullable = false)
     public Date getDayofbirth() {
         return dayofbirth;
     }
@@ -66,8 +54,6 @@ public class Ministry {
         this.dayofbirth = dayofbirth;
     }
 
-    @Basic
-    @Column(name = "email", nullable = true, length = 30)
     public String getEmail() {
         return email;
     }
@@ -76,8 +62,6 @@ public class Ministry {
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "address", nullable = true, length = 30)
     public String getAddress() {
         return address;
     }
@@ -86,8 +70,6 @@ public class Ministry {
         this.address = address;
     }
 
-    @Basic
-    @Column(name = "phone", nullable = true, length = 10)
     public String getPhone() {
         return phone;
     }
@@ -96,7 +78,6 @@ public class Ministry {
         this.phone = phone;
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -104,7 +85,6 @@ public class Ministry {
         return Objects.equals(id, ministry.id) && Objects.equals(ministryid, ministry.ministryid) && Objects.equals(firstname, ministry.firstname) && Objects.equals(lastname, ministry.lastname) && Objects.equals(dayofbirth, ministry.dayofbirth) && Objects.equals(email, ministry.email) && Objects.equals(address, ministry.address) && Objects.equals(phone, ministry.phone);
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(id, ministryid, firstname, lastname, dayofbirth, email, address, phone);
     }

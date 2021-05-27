@@ -4,8 +4,6 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 
-@Entity
-//@Table(name = "semesters", schema = "coursesregistrationdb", catalog = "")
 public class Semester {
     private int id;
     private String semestername;
@@ -13,8 +11,6 @@ public class Semester {
     private Date startdate;
     private Date enddate;
 
-    @Id
-    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -23,8 +19,6 @@ public class Semester {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "semestername", nullable = false, length = 30)
     public String getSemestername() {
         return semestername;
     }
@@ -33,8 +27,6 @@ public class Semester {
         this.semestername = semestername;
     }
 
-    @Basic
-    @Column(name = "semesteryear", nullable = true)
     public String getSemesteryear() {
         return semesteryear;
     }
@@ -43,8 +35,6 @@ public class Semester {
         this.semesteryear = semesteryear;
     }
 
-    @Basic
-    @Column(name = "startdate", nullable = true)
     public Date getStartdate() {
         return startdate;
     }
@@ -53,8 +43,6 @@ public class Semester {
         this.startdate = startdate;
     }
 
-    @Basic
-    @Column(name = "enddate", nullable = true)
     public Date getEnddate() {
         return enddate;
     }
@@ -63,7 +51,6 @@ public class Semester {
         this.enddate = enddate;
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -71,7 +58,6 @@ public class Semester {
         return Objects.equals(id, semester.id) && Objects.equals(semestername, semester.semestername) && Objects.equals(semesteryear, semester.semesteryear) && Objects.equals(startdate, semester.startdate) && Objects.equals(enddate, semester.enddate);
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(id, semestername, semesteryear, startdate, enddate);
     }

@@ -9,8 +9,6 @@ public class CreatedCourseInfoPK implements Serializable {
     private int ministryid;
     private int courseid;
 
-    @Column(name = "ministryid", nullable = false)
-    @Id
     public int getMinistryid() {
         return ministryid;
     }
@@ -19,8 +17,6 @@ public class CreatedCourseInfoPK implements Serializable {
         this.ministryid = ministryid;
     }
 
-    @Column(name = "courseid", nullable = false)
-    @Id
     public int getCourseid() {
         return courseid;
     }
@@ -29,7 +25,6 @@ public class CreatedCourseInfoPK implements Serializable {
         this.courseid = courseid;
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -37,7 +32,6 @@ public class CreatedCourseInfoPK implements Serializable {
         return Objects.equals(ministryid, that.ministryid) && Objects.equals(courseid, that.courseid);
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(ministryid, courseid);
     }
