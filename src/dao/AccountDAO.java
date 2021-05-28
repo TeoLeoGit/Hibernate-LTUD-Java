@@ -23,7 +23,22 @@ public class AccountDAO {
         } finally {
             session.close();
         }
+        return accounts;
+    }
+    public static List<Account> getAccountByUsername(String needle) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Account> accounts = null;
+        try {
+            //Create query
+            final String hql =  "FROM Account ac WHERE ac.username = \'" + needle + "\'";
+            Query query = session.createQuery(hql);
 
+            accounts = query.list();
+        } catch (HibernateException e){
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
         return accounts;
     }
 }
