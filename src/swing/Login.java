@@ -17,9 +17,15 @@ public class Login extends JFrame {
     private JLabel usernameLabel;
     private JLabel passwordLabel;
 
+
     public Login(String title) {
         super(title);
-
+        this.setSize(400, 150);
+        this.setResizable(false);
+        this.setPreferredSize(new Dimension(this.getSize().width,this.getSize().height));
+        System.out.println(this.getSize().height + ", " + this.getSize().width);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(panelLoginMain);
         this.pack();
@@ -28,7 +34,7 @@ public class Login extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameTextField.getText();
                 String password = passwordTextField.getText();
-                List<Account> foundAccounts = AccountDAO.getAccountByUsername(username);
+                List<Account> foundAccounts = AccountDAO.getAccountsByUsername(username);
                 if (foundAccounts == null)
                     System.out.println("No user found.");
                 else
@@ -41,6 +47,5 @@ public class Login extends JFrame {
             }
         });
     }
-
 
 }

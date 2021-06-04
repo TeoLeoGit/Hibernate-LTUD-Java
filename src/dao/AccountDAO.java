@@ -25,7 +25,7 @@ public class AccountDAO {
         }
         return accounts;
     }
-    public static List<Account> getAccountByUsername(String needle) {
+    public static List<Account> getAccountsByUsername(String needle) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Account> accounts = null;
         try {
@@ -40,5 +40,19 @@ public class AccountDAO {
             session.close();
         }
         return accounts;
+    }
+
+    public static Account getAccountByUsername(String username) {
+        Account needle = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            //Create query
+            needle = (Account) session.get(Account.class, username);
+        } catch (HibernateException e){
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return needle;
     }
 }
