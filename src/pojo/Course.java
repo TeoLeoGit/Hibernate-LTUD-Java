@@ -1,45 +1,43 @@
 package pojo;
 
-import javax.persistence.*;
-import java.util.Objects;
-
 public class Course {
-    private int id;
-    private String teachername;
+    private int Id;
+    private String teacherName;
     private String classroom;
-    private String dayofweek;
+    private String dayOfWeek;
     private String shift;
+    private Semester semester;
+    private Subject subject;
 
     public int getId() {
-        return id;
+        return Id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.Id = id;
     }
 
-    public String getTeachername() {
-        return teachername;
+    public String getTeacherName() {
+        return teacherName;
     }
 
-    public void setTeachername(String teachername) {
-        this.teachername = teachername;
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 
     public String getClassroom() {
-        return classroom;
+        return this.classroom;
     }
 
     public void setClassroom(String classroom) {
         this.classroom = classroom;
     }
-
-    public String getDayofweek() {
-        return dayofweek;
+    public String getDayOfWeek() {
+        return dayOfWeek;
     }
 
-    public void setDayofweek(String dayofweek) {
-        this.dayofweek = dayofweek;
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
     public String getShift() {
@@ -50,14 +48,19 @@ public class Course {
         this.shift = shift;
     }
 
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Course course = (Course) o;
-        return Objects.equals(id, course.id) && Objects.equals(teachername, course.teachername) && Objects.equals(classroom, course.classroom) && Objects.equals(dayofweek, course.dayofweek) && Objects.equals(shift, course.shift);
+    public Semester getSemester() {
+        return semester;
     }
 
-    public int hashCode() {
-        return Objects.hash(id, teachername, classroom, dayofweek, shift);
+    public void setSemester(Semester semester) {
+        this.semester = semester;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 }
