@@ -6,10 +6,12 @@ import java.util.Objects;
 
 public class Ministry {
     private int id;
-    private int ministryid;
+    private String username;
+    private String password;
+    private int ministryId;
     private String firstname;
     private String lastname;
-    private Date dayofbirth;
+    private Date dayOfBirth;
     private String email;
     private String address;
     private String phone;
@@ -22,12 +24,28 @@ public class Ministry {
         this.id = id;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username =  username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password =  password;
+    }
+
     public int getMinistryid() {
-        return ministryid;
+        return ministryId;
     }
 
     public void setMinistryid(int ministryid) {
-        this.ministryid = ministryid;
+        this.ministryId = ministryid;
     }
 
     public String getFirstname() {
@@ -47,11 +65,11 @@ public class Ministry {
     }
 
     public Date getDayofbirth() {
-        return dayofbirth;
+        return dayOfBirth;
     }
 
     public void setDayofbirth(Date dayofbirth) {
-        this.dayofbirth = dayofbirth;
+        this.dayOfBirth = dayofbirth;
     }
 
     public String getEmail() {
@@ -82,10 +100,10 @@ public class Ministry {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ministry ministry = (Ministry) o;
-        return Objects.equals(id, ministry.id) && Objects.equals(ministryid, ministry.ministryid) && Objects.equals(firstname, ministry.firstname) && Objects.equals(lastname, ministry.lastname) && Objects.equals(dayofbirth, ministry.dayofbirth) && Objects.equals(email, ministry.email) && Objects.equals(address, ministry.address) && Objects.equals(phone, ministry.phone);
+        return Objects.equals(id, ministry.id) && Objects.equals(ministryId, ministry.ministryId) && Objects.equals(firstname, ministry.firstname) && Objects.equals(lastname, ministry.lastname) && Objects.equals(dayOfBirth, ministry.dayOfBirth) && Objects.equals(email, ministry.email) && Objects.equals(address, ministry.address) && Objects.equals(phone, ministry.phone);
     }
 
     public int hashCode() {
-        return Objects.hash(id, ministryid, firstname, lastname, dayofbirth, email, address, phone);
+        return Objects.hash(id, ministryId, firstname, lastname, dayOfBirth, email, address, phone);
     }
 }

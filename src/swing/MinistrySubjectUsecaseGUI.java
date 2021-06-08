@@ -19,7 +19,10 @@ public class MinistrySubjectUsecaseGUI extends JFrame {
         String column[]={"ID","NAME","SALARY"};
         dataTable = new JTable(data,column);
         dataTable.setBounds(32,20,920,364);
-        dataTable.getColumnModel().getColumn(1).setCellRenderer(new ButtonRenderer());
+
+        ButtonRenderer test = new ButtonRenderer();
+
+        dataTable.getColumnModel().getColumn(1).setCellRenderer(test);
         dataTable.getColumnModel().getColumn(1).setCellEditor(new ButtonEditor(new JTextField()));
         JScrollPane pane  = new JScrollPane(dataTable);
         getContentPane().add(pane);
@@ -41,7 +44,11 @@ public class MinistrySubjectUsecaseGUI extends JFrame {
 class ButtonRenderer extends JButton implements TableCellRenderer {
     public ButtonRenderer() {
         //set
-        setOpaque(true);
+        setOpaque(false);
+        //transparent
+        setContentAreaFilled(false);
+        setBorderPainted(false);
+        setForeground(Color.BLUE);
     }
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -57,7 +64,11 @@ class ButtonEditor extends DefaultCellEditor {
     public ButtonEditor(JTextField textField) {
         super(textField);
         btn = new JButton();
-        btn.setOpaque(true);
+        btn.setOpaque(false);
+        btn.setContentAreaFilled(false);
+        btn.setBorderPainted(false);
+        //color
+
 
         //btn is clicked
         btn.addActionListener(new ActionListener() {
@@ -72,6 +83,7 @@ class ButtonEditor extends DefaultCellEditor {
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         lbl = (value==null)? "":value.toString();
         btn.setText(lbl);
+        btn.setForeground(Color.RED);
         isClicked = true;
         return btn;
     }

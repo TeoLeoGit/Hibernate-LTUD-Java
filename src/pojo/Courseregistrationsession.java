@@ -11,6 +11,7 @@ public class Courseregistrationsession {
     private int id;
     private Date startdate;
     private Date enddate;
+    private Semester semester;
 
     public int getId() {
         return id;
@@ -34,6 +35,14 @@ public class Courseregistrationsession {
 
     public void setEnddate(Date enddate) {
         this.enddate = enddate;
+    }
+
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
     }
 
     public boolean equals(Object o) {

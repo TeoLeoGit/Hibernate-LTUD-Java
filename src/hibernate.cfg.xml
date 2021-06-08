@@ -11,12 +11,10 @@
         <property name = "connection.password">teo15102000</property>
 
         <property name = "show_sql">true</property>
-        <mapping resource="Account.hbm.xml"/>
-        <mapping class="pojo.Account"/>
         <mapping resource="Courseregistrationsession.hbm.xml"/>
         <mapping class="pojo.Courseregistrationsession"/>
-        <mapping class="pojo.Course"/>
         <mapping resource="Course.hbm.xml"/>
+        <mapping class="pojo.Course"/>
         <mapping resource="CreatedCourseInfo.hbm.xml"/>
         <mapping class="pojo.CreatedCourseInfo"/>
         <mapping resource="Coursesregistration.hbm.xml"/>

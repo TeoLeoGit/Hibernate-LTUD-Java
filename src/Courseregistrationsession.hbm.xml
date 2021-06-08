@@ -14,5 +14,9 @@
         <property name="enddate">
             <column name="enddate" sql-type="date"/>
         </property>
+        <many-to-one class="pojo.Semester" name="semester"
+                     fetch="join" lazy="false" cascade="save-update, delete">
+            <column name="semesterid" not-null="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

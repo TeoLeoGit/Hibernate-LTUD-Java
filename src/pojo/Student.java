@@ -1,15 +1,16 @@
 package pojo;
 
-import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 
 public class Student {
     private int id;
-    private int studentid;
+    private String username;
+    private String password;
+    private int studentId;
     private String firstname;
     private String lastname;
-    private Date dayofbirth;
+    private Date dayOfBirth;
     private String email;
     private String address;
     private String phone;
@@ -22,12 +23,28 @@ public class Student {
         this.id = id;
     }
 
-    public int getStudentid() {
-        return studentid;
+    public String getUsername() {
+        return username;
     }
 
-    public void setStudentid(int studentid) {
-        this.studentid = studentid;
+    public void setUsername(String username) {
+        this.username =  username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password =  password;
+    }
+
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(int studentid) {
+        this.studentId = studentid;
     }
 
     public String getFirstname() {
@@ -47,11 +64,11 @@ public class Student {
     }
 
     public Date getDayofbirth() {
-        return dayofbirth;
+        return dayOfBirth;
     }
 
     public void setDayofbirth(Date dayofbirth) {
-        this.dayofbirth = dayofbirth;
+        this.dayOfBirth = dayofbirth;
     }
 
     public String getEmail() {
@@ -78,14 +95,4 @@ public class Student {
         this.phone = phone;
     }
 
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return Objects.equals(id, student.id) && Objects.equals(studentid, student.studentid) && Objects.equals(firstname, student.firstname) && Objects.equals(lastname, student.lastname) && Objects.equals(dayofbirth, student.dayofbirth) && Objects.equals(email, student.email) && Objects.equals(address, student.address) && Objects.equals(phone, student.phone);
-    }
-
-    public int hashCode() {
-        return Objects.hash(id, studentid, firstname, lastname, dayofbirth, email, address, phone);
-    }
 }

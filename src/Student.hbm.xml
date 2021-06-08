@@ -8,7 +8,13 @@
         <id name="id">
             <column name="id" sql-type="int unsigned"/>
         </id>
-        <property name="studentid">
+        <property name="username">
+            <column name="username" sql-type="varchar(30)" not-null="true"/>
+        </property>
+        <property name="password">
+            <column name="userpw" sql-type="varchar(30)" not-null="true"/>
+        </property>
+        <property name="studentId">
             <column name="studentid" sql-type="int unsigned" not-null="true"/>
         </property>
         <property name="firstname">
