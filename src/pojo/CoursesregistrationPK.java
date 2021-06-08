@@ -6,33 +6,23 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class CoursesregistrationPK implements Serializable {
-    private int studentid;
-    private int courseid;
+    private Student student;
+    private Course course;
 
-    public int getStudentid() {
-        return studentid;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentid(int studentid) {
-        this.studentid = studentid;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public Object getCourseid() {
-        return courseid;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseid(int courseid) {
-        this.courseid = courseid;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CoursesregistrationPK that = (CoursesregistrationPK) o;
-        return Objects.equals(studentid, that.studentid) && Objects.equals(courseid, that.courseid);
-    }
-
-    public int hashCode() {
-        return Objects.hash(studentid, courseid);
-    }
 }

@@ -67,6 +67,7 @@ public class LoginGUI extends JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         //event handle
         ministryLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -76,9 +77,10 @@ public class LoginGUI extends JFrame {
                     for (Ministry item : ministries) {
                         if (item.getUsername().equals(ministryUsernameText.getText()))
                             if (item.getPassword().equals(ministryPasswordText.getText())) {
-                                JFrame ministryGUI = new MinistryGUI("hello");
+                                JFrame ministryGUI = new MinistryGUI(item);
                                 ministryGUI.setVisible(true);
                                 dispose();
+                                break;
                             }
                             else
                                 JOptionPane.showMessageDialog(ministryLogin, "Incorrect password");

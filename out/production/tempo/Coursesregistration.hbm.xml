@@ -6,12 +6,12 @@
 
     <class name="pojo.Coursesregistration" table="coursesregistration" schema="coursesregistrationdb">
         <composite-id mapped="true" class="pojo.CoursesregistrationPK">
-            <key-property name="studentid">
+            <key-many-to-one name="student" class="pojo.Student">
                 <column name="studentid" sql-type="int unsigned"/>
-            </key-property>
-            <key-property name="courseid">
+            </key-many-to-one>
+            <key-many-to-one name="course" class="pojo.Course">
                 <column name="courseid" sql-type="int unsigned"/>
-            </key-property>
+            </key-many-to-one>
         </composite-id>
         <property name="registerdate">
             <column name="registerdate" sql-type="date"/>

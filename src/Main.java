@@ -8,7 +8,7 @@ public class Main {
         JFrame frame = new LoginGUI("Login");
         frame.setVisible(true);
 
-        //JFrame fram3 = new
+        //JFrame fram3 =  new MinistryGUI();
         //fram3.setVisible(true);
     }
 }
