@@ -96,14 +96,4 @@ public class Ministry {
         this.phone = phone;
     }
 
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Ministry ministry = (Ministry) o;
-        return Objects.equals(id, ministry.id) && Objects.equals(ministryId, ministry.ministryId) && Objects.equals(firstname, ministry.firstname) && Objects.equals(lastname, ministry.lastname) && Objects.equals(dayOfBirth, ministry.dayOfBirth) && Objects.equals(email, ministry.email) && Objects.equals(address, ministry.address) && Objects.equals(phone, ministry.phone);
-    }
-
-    public int hashCode() {
-        return Objects.hash(id, ministryId, firstname, lastname, dayOfBirth, email, address, phone);
-    }
 }

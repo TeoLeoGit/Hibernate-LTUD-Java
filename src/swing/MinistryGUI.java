@@ -88,6 +88,12 @@ public class MinistryGUI extends JFrame {
             }
         });
 
-
+        ministryAccountBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.setVisible(false);
+                JPanel ministryAccountPnl = new MinistryAccountPanel(mnt, mainPanel);
+                add(ministryAccountPnl);
+            }
+        });
     }
 }

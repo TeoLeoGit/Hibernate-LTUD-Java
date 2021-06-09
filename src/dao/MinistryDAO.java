@@ -58,4 +58,37 @@ public class MinistryDAO {
         }
         return true;
     }
+
+    public static List<Ministry> getMinistriesByFirstname(String firstname) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Ministry> ministries = null;
+        try {
+            //Create query
+            final String hql =  "from Ministry mnt where mnt.firstname = :firstname";
+            Query query = session.createQuery(hql);
+            query.setParameter("firstname", firstname);
+            ministries = query.list();
+        } catch (HibernateException e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return ministries;
+    }
+
+    public static List<Ministry> getAllMinistries() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Ministry> ministries = null;
+        try {
+            //Create query
+            final String hql =  "select mnt from Ministry mnt";
+            Query query = session.createQuery(hql);
+            ministries = query.list();
+        } catch (HibernateException e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return ministries;
+    }
 }
