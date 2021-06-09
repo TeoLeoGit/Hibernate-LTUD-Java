@@ -2,6 +2,7 @@ package dao;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import pojo.Ministry;
 import util.HibernateUtil;
@@ -24,5 +25,37 @@ public class MinistryDAO {
             session.close();
         }
         return ministries;
+    }
+
+    public static Ministry getMinistryById (int id) {
+        Ministry mnt = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            mnt = (Ministry) session.get(Ministry.class, id);
+        } catch (HibernateException e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return mnt;
+    }
+
+    public static boolean updateMinistryAccount(Ministry updateMnt) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        if (MinistryDAO.getMinistryById(updateMnt.getId()) == null) {
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(updateMnt);
+            transaction.commit();
+        } catch (HibernateException e) {
+            transaction.rollback();
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return true;
     }
 }

@@ -5,7 +5,7 @@ import javax.swing.*;
 public class Main {
 
     public static void main(String[] args) {
-        JFrame frame = new LoginGUI("Login");
+        JFrame frame = new LoginGUI();
         frame.setVisible(true);
 
         //JFrame fram3 =  new MinistryGUI();

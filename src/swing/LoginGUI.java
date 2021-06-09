@@ -16,7 +16,7 @@ public class LoginGUI extends JFrame {
     private JPanel panelStudent;
     private JButton ministryLogin;
     private JButton studentLogin;
-    public LoginGUI(String title) {
+    public LoginGUI() {
         tabbedPanel = new JTabbedPane();
         panelMinistry = new JPanel();
         panelStudent = new JPanel();
@@ -78,8 +78,9 @@ public class LoginGUI extends JFrame {
                         if (item.getUsername().equals(ministryUsernameText.getText()))
                             if (item.getPassword().equals(ministryPasswordText.getText())) {
                                 JFrame ministryGUI = new MinistryGUI(item);
-                                ministryGUI.setVisible(true);
+                                ministryGUI .setVisible(true);
                                 dispose();
+
                                 break;
                             }
                             else
