@@ -91,4 +91,24 @@ public class MinistryDAO {
         }
         return ministries;
     }
+
+    public static boolean deleteMinistry(int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Ministry mnt = MinistryDAO.getMinistryById(id);
+        if (mnt == null) {
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            //Create query
+            transaction = session.beginTransaction();
+            session.delete(mnt);
+            transaction.commit();
+        } catch (HibernateException e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return true;
+    }
 }

@@ -2,7 +2,9 @@ package pojo;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Ministry {
     private int id;
@@ -15,6 +17,15 @@ public class Ministry {
     private String email;
     private String address;
     private String phone;
+    private Set<CreatedCourseInfo> createdCourses = new HashSet<CreatedCourseInfo>(0);
+
+    public Set<CreatedCourseInfo> getCreatedCourses() {
+        return createdCourses;
+    }
+
+    public void setCreatedCourses(Set<CreatedCourseInfo> createdCourses) {
+        this.createdCourses = createdCourses;
+    }
 
     public int getId() {
         return id;

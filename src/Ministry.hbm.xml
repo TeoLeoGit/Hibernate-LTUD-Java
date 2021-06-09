@@ -35,5 +35,11 @@
         <property name="phone">
             <column name="phone" sql-type="char(10)" length="10" not-null="true"/>
         </property>
+        <set inverse="true" name="createdCourses" >
+            <key>
+                <column name="courseid" not-null="true"/>
+            </key>
+            <one-to-many class="pojo.CreatedCourseInfo"/>
+        </set>
     </class>
 </hibernate-mapping>

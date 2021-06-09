@@ -10,14 +10,17 @@ public class ButtonEditor extends DefaultCellEditor {
     protected JButton btn;
     private String lbl;
     private Boolean isClicked;
+
+    //test
+    public JButton getBtn() {
+        return btn;
+    }
     public ButtonEditor(JTextField textField) {
         super(textField);
         btn = new JButton();
         btn.setOpaque(false);
         btn.setContentAreaFilled(false);
         btn.setBorderPainted(false);
-        //color
-
 
         //btn is clicked
         btn.addActionListener(new ActionListener() {
@@ -39,9 +42,6 @@ public class ButtonEditor extends DefaultCellEditor {
     //if btn cell value changes, if clicked that is
     @Override
     public Object getCellEditorValue() {
-        if (isClicked) {
-            JOptionPane.showMessageDialog(btn, lbl+"clicked");
-        }
         isClicked = false;
         return new String(lbl);
     }
