@@ -29,11 +29,10 @@ public class MinistryAccountPanel extends JPanel {
         pane.setBounds(20, 100, 860,320);
 
         backBtn.setBounds(20,10, 160,35);
-        searchBar.setBounds(110, 55, 220, 25);
-        lbl.setBounds(20, 55, 90, 25);
-        findMntBtn.setBounds(340, 55, 120, 25);
-        addMntBtn.setBounds(590, 55, 290, 25);
-        //dataTbl.setBounds(20, 100, 860,320);
+        searchBar.setBounds(140, 55, 220, 25);
+        lbl.setBounds(20, 55, 120, 25);
+        findMntBtn.setBounds(370, 55, 120, 25);
+        addMntBtn.setBounds(578, 55, 300, 25);
         this.setLayout(null);
 
         add(backBtn); add(findMntBtn); add(addMntBtn); add(searchBar); add(lbl); add(pane);
@@ -53,18 +52,7 @@ public class MinistryAccountPanel extends JPanel {
                 else {
                     List<Ministry> foundMnts = MinistryDAO.getMinistriesByFirstname(searchBar.getText());
                     if(!foundMnts.isEmpty()) {
-                        Component[] components = getComponents();
-                        for (Component component : components) {
-                            if (component.getClass().equals(JScrollPane.class)) {
-                                remove(component);
-                            }
-                        }
-                        setDataTble(foundMnts);
-                        JScrollPane newPane = new JScrollPane(dataTbl);
-                        newPane.setBounds(20, 100, 860,320);
-                        add(newPane);
-                        revalidate();
-                        repaint();
+                        resetScrollPane(foundMnts);
                     }
                     else {
                         JOptionPane.showMessageDialog(findMntBtn, "No result matched");
@@ -72,14 +60,21 @@ public class MinistryAccountPanel extends JPanel {
                 }
             }
         });
+        MinistryAccountPanel panel = this;
+        addMntBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFrame addMntFrame = new AddingMinistryFrame(ministries, panel);
+                addMntFrame.setVisible(true);
+            }
+        });
     }
 
     public void setDataTble(List<Ministry> ministries) {
-        String column[]={"ID","FIRSTNAME","LASTNAME", "DAY OF BIRTH", "EMAIL", "ADDRESS", "PHONE", "EDIT", "RESET PASSWORD",
-            "DELETE"};
+        String column[]={"ACCOUNT ID", "MINISTRY ID", "FIRSTNAME","LASTNAME", "DAY OF BIRTH", "EMAIL", "ADDRESS", "PHONE", "EDIT", "DELETE",
+            "RESET PWD"};
         DefaultTableModel model = new DefaultTableModel(column, 0);
         for (Ministry item : ministries) {
-            model.addRow(new Object[]{item.getMinistryid(), item.getFirstname(), item.getLastname(), item.getDayofbirth(),
+            model.addRow(new Object[]{String.valueOf(item.getId()), item.getMinistryid(), item.getFirstname(), item.getLastname(), item.getDayofbirth(),
                     item.getEmail(), item.getAddress(), item.getPhone(), "Edit", "Delete", "Reset password"});
         }
         dataTbl = new JTable(model);
@@ -91,18 +86,77 @@ public class MinistryAccountPanel extends JPanel {
         ButtonEditor deleteCell = new ButtonEditor(new JTextField());
         ButtonEditor resetCell = new ButtonEditor(new JTextField());
 
-        dataTbl.getColumnModel().getColumn(7).setCellRenderer(editBtn);
-        dataTbl.getColumnModel().getColumn(7).setCellEditor(editCell);
-        dataTbl.getColumnModel().getColumn(8).setCellRenderer(deleteBtn);
-        dataTbl.getColumnModel().getColumn(8).setCellEditor(deleteCell);
-        dataTbl.getColumnModel().getColumn(9).setCellRenderer(resetPwdBtn);
-        dataTbl.getColumnModel().getColumn(9).setCellEditor(resetCell);
+        dataTbl.getColumnModel().getColumn(8).setCellRenderer(editBtn);
+        dataTbl.getColumnModel().getColumn(8).setCellEditor(editCell);
+        dataTbl.getColumnModel().getColumn(9).setCellRenderer(deleteBtn);
+        dataTbl.getColumnModel().getColumn(9).setCellEditor(deleteCell);
+        dataTbl.getColumnModel().getColumn(10).setCellRenderer(resetPwdBtn);
+        dataTbl.getColumnModel().getColumn(10).setCellEditor(resetCell);
 
         //event in table
         editCell.getBtn().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println(dataTbl.getSelectedRow());
+                int index = dataTbl.getSelectedRow();
+                //edit mnt
             }
         });
+
+        deleteCell.getBtn().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int index = dataTbl.getSelectedRow();
+                if (index != -1) {
+                    int modelIndex = dataTbl.convertRowIndexToModel(index);
+                    try {
+                        int deleteId = Integer.parseInt((String) dataTbl.getValueAt(index, 0)) ;
+                        if (MinistryDAO.deleteMinistry(deleteId)) {
+                            JOptionPane.showMessageDialog(deleteCell.getBtn(), "Deleted ministry with ID " + String.valueOf(deleteId));
+                        }
+                        else
+                            JOptionPane.showMessageDialog(deleteCell.getBtn(), "Failed to delete ministry");
+                    }
+                    catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(deleteCell.getBtn(), "Number format exception");
+                    }
+                    DefaultTableModel model = (DefaultTableModel) dataTbl.getModel();
+                    model.removeRow(modelIndex);
+                }
+            }
+        });
+
+        resetCell.getBtn().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int index = dataTbl.getSelectedRow();
+                if (index != -1) {
+                    try {
+                        int resetId = Integer.parseInt((String) dataTbl.getValueAt(index, 0)) ;
+                        Ministry resetMnt = MinistryDAO.getMinistryById(resetId);
+                        resetMnt.setPassword(String.valueOf(resetMnt.getMinistryid()));
+                        if (MinistryDAO.updateMinistryAccount(resetMnt)) {
+                            JOptionPane.showMessageDialog(deleteCell.getBtn(), "New password is ministry ID number");
+                        }
+                        else
+                            JOptionPane.showMessageDialog(deleteCell.getBtn(), "Failed to reset password");
+                    }
+                    catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(deleteCell.getBtn(), "Number format exception");
+                    }
+                }
+            }
+        });
+    }
+
+    public void resetScrollPane(List<Ministry> mnts) {
+        Component[] components = getComponents();
+        for (Component component : components) {
+            if (component.getClass().equals(JScrollPane.class)) {
+                remove(component);
+            }
+        }
+        setDataTble(mnts);
+        JScrollPane newPane = new JScrollPane(dataTbl);
+        newPane.setBounds(20, 100, 860,320);
+        add(newPane);
+        revalidate();
+        repaint();
     }
 }

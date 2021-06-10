@@ -30,6 +30,10 @@ public class MinistryInfoSettingGUI extends JPanel {
         JLabel emailLabel = new JLabel("New email");
         JLabel addressLabel = new JLabel("New address");
         JLabel phoneLabel = new JLabel("New phone");
+        JLabel dayLabel = new JLabel("Day");
+        JLabel monthLabel = new JLabel("Month");
+        JLabel yearLabel = new JLabel("Year");
+
         JTextField fnTxt = new JTextField();
         JTextField lnTxt = new JTextField();
         JTextField dayTxt = new JTextField();
@@ -50,6 +54,9 @@ public class MinistryInfoSettingGUI extends JPanel {
         add(emailLabel);
         add(addressLabel);
         add(phoneLabel);
+        add(dayLabel);
+        add(monthLabel);
+        add(yearLabel);
         add(fnTxt);
         add(lnTxt);
         add(dayTxt);
@@ -76,11 +83,15 @@ public class MinistryInfoSettingGUI extends JPanel {
         addressLabel.setBounds(470, 216, 120, 25);
         phoneLabel.setBounds(470, 246, 120, 25);
 
+
         fnTxt.setBounds(590, 96, 260, 25);
         lnTxt.setBounds(590, 126, 260, 25);
-        dayTxt.setBounds(640, 156, 50, 25);
-        monthTxt.setBounds(700, 156, 50, 25);
-        yearTxt.setBounds(760, 156, 50, 25);
+        dayLabel.setBounds(590, 156, 30, 25);
+        dayTxt.setBounds(620, 156, 30, 25);
+        monthLabel.setBounds(688, 156, 50, 25);
+        monthTxt.setBounds(730, 156, 30, 25);
+        yearLabel.setBounds(778, 156, 30, 25);
+        yearTxt.setBounds(808, 156, 40, 25);
         emailTxt.setBounds(590, 186, 260, 25);
         addressTxt.setBounds(590, 216, 260, 25);
         phoneTxt.setBounds(590, 246, 260, 25);

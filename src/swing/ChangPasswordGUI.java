@@ -33,7 +33,7 @@ public class ChangPasswordGUI extends JFrame {
         this.setPreferredSize(new Dimension(this.getSize().width, this.getSize().height));
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //event handle
         confirmBtn.addActionListener(new ActionListener() {
