@@ -15,7 +15,7 @@ public class MinistryAccountPanel extends JPanel {
     private JButton findMntBtn;
     private JButton addMntBtn;
     private JTable dataTbl;
-    public MinistryAccountPanel(Ministry mnt, JPanel mainPanel) {
+    public MinistryAccountPanel(JPanel mainPanel) {
         backBtn = new JButton("Back to main");
         findMntBtn = new JButton("Find ministry");
         addMntBtn = new JButton("Add new ministry");
@@ -141,12 +141,12 @@ public class MinistryAccountPanel extends JPanel {
                 int index = dataTbl.getSelectedRow();
                 if (index != -1) {
                     try {
-                        int resetId = Integer.parseInt((String) dataTbl.getValueAt(index, 0)) ;
-                        JFrame editFrame = new EditMinistryFrame(ministries, resetId, panel);
+                        int editId = Integer.parseInt((String) dataTbl.getValueAt(index, 0)) ;
+                        JFrame editFrame = new EditMinistryFrame(ministries, editId, panel);
                         editFrame.setVisible(true);
                     }
                     catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(deleteCell.getBtn(), "Number format exception");
+                        JOptionPane.showMessageDialog(editCell.getBtn(), "Number format exception");
                     }
                 }
             }

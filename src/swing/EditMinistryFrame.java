@@ -145,11 +145,12 @@ public class EditMinistryFrame extends JFrame {
                         listMnt.add(editMnt);
                         panel.resetScrollPane(listMnt);
                         JOptionPane.showMessageDialog(confirmBtn, "Update success");
+                        dispose();
                     }
                     else
                         JOptionPane.showMessageDialog(confirmBtn, "Update failed");
                 } else
-                    JOptionPane.showMessageDialog(confirmBtn, "Please fill in all the fields");
+                    JOptionPane.showMessageDialog(confirmBtn, "Please fill in one of the fields");
             }
         });
     }

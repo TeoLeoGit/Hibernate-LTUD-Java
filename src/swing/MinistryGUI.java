@@ -1,5 +1,6 @@
 package swing;
 import pojo.Ministry;
+import pojo.Semester;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,7 +71,7 @@ public class MinistryGUI extends JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        Semester currentSem = new Semester();
         //event handle
         changeInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -91,8 +92,24 @@ public class MinistryGUI extends JFrame {
         ministryAccountBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainPanel.setVisible(false);
-                JPanel ministryAccountPnl = new MinistryAccountPanel(mnt, mainPanel);
+                JPanel ministryAccountPnl = new MinistryAccountPanel(mainPanel);
                 add(ministryAccountPnl);
+            }
+        });
+
+        subjectBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.setVisible(false);
+                JPanel subjectPnl = new MinistrySubjectPanel(mainPanel);
+                add(subjectPnl);
+            }
+        });
+
+        semesterBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.setVisible(false);
+                JPanel semPnl = new MinistrySemesterPanel(mainPanel, currentSem);
+                add(semPnl);
             }
         });
     }

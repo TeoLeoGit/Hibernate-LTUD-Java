@@ -1,12 +1,23 @@
 package pojo;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Subject {
     private int id;
     private String subjectname;
     private int credits;
+    private Set<Course> courses = new HashSet<Course>(0);
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
 
     public int getId() {
         return id;

@@ -2,7 +2,9 @@ package pojo;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Semester {
     private int id;
@@ -10,6 +12,32 @@ public class Semester {
     private String semesteryear;
     private Date startdate;
     private Date enddate;
+    private Set<Courseregistrationsession> coursesRegSession = new HashSet<Courseregistrationsession>(0);
+    private Set<Course> semCourses = new HashSet<Course>(0);
+
+    public Set<Course> getSemCourses() {
+        return semCourses;
+    }
+
+    public void setSemCourses(Set<Course> courses) {
+        this.semCourses = courses;
+    }
+
+    public Set<Courseregistrationsession> getCoursesRegSession() {
+        return coursesRegSession;
+    }
+
+    public void setCoursesRegSession(Set<Courseregistrationsession> coursesRegSession) {
+        this.coursesRegSession = coursesRegSession;
+    }
+
+    public Set<Courseregistrationsession> getCourses() {
+        return coursesRegSession;
+    }
+
+    public void setCourses(Set<Courseregistrationsession> coursesRegSession) {
+        this.coursesRegSession = coursesRegSession;
+    }
 
     public int getId() {
         return id;

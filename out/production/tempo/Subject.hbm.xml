@@ -7,6 +7,7 @@
     <class name="pojo.Subject" table="subjects" schema="coursesregistrationdb">
         <id name="id">
             <column name="id" sql-type="int unsigned"/>
+            <generator class="increment" />
         </id>
         <property name="subjectname">
             <column name="subjectname" sql-type="varchar(30)" length="30"/>
@@ -14,5 +15,11 @@
         <property name="credits">
             <column name="credits" sql-type="int unsigned" not-null="true"/>
         </property>
+        <set inverse="true" name="courses" >
+            <key>
+                <column name="courseId" not-null="true"/>
+            </key>
+            <one-to-many class="pojo.Course"/>
+        </set>
     </class>
 </hibernate-mapping>

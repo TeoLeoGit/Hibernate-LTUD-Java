@@ -156,6 +156,7 @@ public class AddingMinistryFrame extends JFrame {
                         ministries.add(addMnt);
                         JOptionPane.showMessageDialog(confirmBtn, "Update success");
                         panel.resetScrollPane(ministries);
+                        dispose();
                     }
                     else
                         JOptionPane.showMessageDialog(confirmBtn, "Update failed");
