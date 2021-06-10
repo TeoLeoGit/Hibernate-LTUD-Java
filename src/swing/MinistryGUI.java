@@ -71,7 +71,8 @@ public class MinistryGUI extends JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Semester currentSem = new Semester();
+
+        final Semester[] currentSem = {new Semester()};
         //event handle
         changeInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -110,6 +111,7 @@ public class MinistryGUI extends JFrame {
                 mainPanel.setVisible(false);
                 JPanel semPnl = new MinistrySemesterPanel(mainPanel, currentSem);
                 add(semPnl);
+                System.out.println(currentSem[0].getId());
             }
         });
     }

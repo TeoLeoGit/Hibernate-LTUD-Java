@@ -8,16 +8,21 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
 
 public class MinistrySemesterPanel extends JPanel {
     private JButton backBtn;
     private JButton findSemBtn;
     private JButton addSemBtn;
     private JTable dataTbl;
-    public MinistrySemesterPanel(JPanel mainPanel, Semester currentSemester) {
+    private Semester setCurrentSem;
+
+    public MinistrySemesterPanel(JPanel mainPanel, final Semester[] currentSem) {
         backBtn = new JButton("Back to main");
         findSemBtn = new JButton("Find semester");
         addSemBtn = new JButton("Add new semester");
@@ -42,6 +47,7 @@ public class MinistrySemesterPanel extends JPanel {
         backBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
+                currentSem[0] = setCurrentSem;
                 mainPanel.repaint();
                 mainPanel.setVisible(true);
             }
@@ -69,7 +75,10 @@ public class MinistrySemesterPanel extends JPanel {
                 addingSemester.setVisible(true);
             }
         });
+
+
     }
+
     public void setDataTble(List<Semester> semList) {
         String column[] = {"SEMESTER ID", "SEMESTER NAME", "YEAR", "START DATE", "END DATE", "SET AS CURRENT SEMESTER", "DELETE"};
         DefaultTableModel model = new DefaultTableModel(column, 0);
@@ -89,9 +98,30 @@ public class MinistrySemesterPanel extends JPanel {
 
         setCell.getBtn().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-                LocalDateTime now = LocalDateTime.now();
-                System.out.println(dtf.format(now));
+                SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+                Date today = java.util.Calendar.getInstance().getTime();
+                int index = dataTbl.getSelectedRow();
+                if (index != -1) {
+                    try {
+                        try {
+                            Date checkEndDate = sdformat.parse(dataTbl.getValueAt(index, 4).toString());
+                            if (checkEndDate.compareTo(today) > 0) {
+                                setCurrentSem = SemesterDAO.getSemesterById(Integer.parseInt(dataTbl.
+                                        getValueAt(index, 0).toString()));
+                                JOptionPane.showMessageDialog(setCell.getBtn(), "Current semester is set");
+                            }
+                            else
+                                JOptionPane.showMessageDialog(setCell.getBtn(), "Cannot set ended semester to " +
+                                        "current semester");
+                        }
+                        catch (ParseException pe) {
+                            JOptionPane.showMessageDialog(setCell.getBtn(), "Error converting datetime format");
+                        }
+                    }
+                    catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(setCell.getBtn(), "Number format exception");
+                    }
+                }
             }
         });
 
@@ -101,7 +131,7 @@ public class MinistrySemesterPanel extends JPanel {
                 if (index != -1) {
                     int modelIndex = dataTbl.convertRowIndexToModel(index);
                     try {
-                        int deleteId = Integer.parseInt(dataTbl.getValueAt(index, 0).toString()) ;
+                        int deleteId = Integer.parseInt(dataTbl.getValueAt(index, 0).toString());
                         if (SemesterDAO.deleteSemester(deleteId)) {
                             JOptionPane.showMessageDialog(deleteCell.getBtn(), "Deleted semester with ID " + String.valueOf(deleteId));
                         }
@@ -132,4 +162,7 @@ public class MinistrySemesterPanel extends JPanel {
         revalidate();
         repaint();
     }
+
+
+
 }

@@ -7,6 +7,7 @@
     <class name="pojo.Semester" table="semesters" schema="coursesregistrationdb">
         <id name="id">
             <column name="id" sql-type="int unsigned"/>
+            <generator class="increment" />
         </id>
         <property name="semestername">
             <column name="semestername" sql-type="varchar(30)" length="30"/>
@@ -20,5 +21,17 @@
         <property name="enddate">
             <column name="enddate" sql-type="date" not-null="true"/>
         </property>
+        <set inverse="true" name="coursesRegSession" >
+            <key>
+                <column name="id" not-null="true"/>
+            </key>
+            <one-to-many class="pojo.Courseregistrationsession"/>
+        </set>
+        <set inverse="true" name="semCourses" >
+            <key>
+                <column name="courseId" not-null="true"/>
+            </key>
+            <one-to-many class="pojo.Course"/>
+        </set>
     </class>
 </hibernate-mapping>
