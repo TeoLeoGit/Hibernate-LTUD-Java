@@ -78,7 +78,6 @@ public class MinistryAccountPanel extends JPanel {
                     item.getEmail(), item.getAddress(), item.getPhone(), "Edit", "Delete", "Reset password"});
         }
         dataTbl = new JTable(model);
-        //dataTbl.getColumnModel().getColumn(0).setWidth(10);
         ButtonRenderer editBtn = new ButtonRenderer();
         ButtonRenderer deleteBtn = new ButtonRenderer();
         ButtonRenderer resetPwdBtn = new ButtonRenderer();
@@ -94,13 +93,6 @@ public class MinistryAccountPanel extends JPanel {
         dataTbl.getColumnModel().getColumn(10).setCellEditor(resetCell);
 
         //event in table
-        editCell.getBtn().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int index = dataTbl.getSelectedRow();
-                //edit mnt
-            }
-        });
-
         deleteCell.getBtn().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int index = dataTbl.getSelectedRow();
@@ -136,6 +128,22 @@ public class MinistryAccountPanel extends JPanel {
                         }
                         else
                             JOptionPane.showMessageDialog(deleteCell.getBtn(), "Failed to reset password");
+                    }
+                    catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(deleteCell.getBtn(), "Number format exception");
+                    }
+                }
+            }
+        });
+        MinistryAccountPanel panel = this;
+        editCell.getBtn().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int index = dataTbl.getSelectedRow();
+                if (index != -1) {
+                    try {
+                        int resetId = Integer.parseInt((String) dataTbl.getValueAt(index, 0)) ;
+                        JFrame editFrame = new EditMinistryFrame(ministries, resetId, panel);
+                        editFrame.setVisible(true);
                     }
                     catch (NumberFormatException ex) {
                         JOptionPane.showMessageDialog(deleteCell.getBtn(), "Number format exception");

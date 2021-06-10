@@ -10,10 +10,10 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.List;
 
-public class AddingMinistryFrame extends JFrame {
+public class EditMinistryFrame extends JFrame {
     JPanel mainPanel;
     JButton confirmBtn;
-    public AddingMinistryFrame(List<Ministry> ministries, MinistryAccountPanel panel) {
+    public EditMinistryFrame(List<Ministry> listMnt, int editId, MinistryAccountPanel panel) {
         mainPanel = new JPanel();
         confirmBtn = new JButton("Confirm");
 
@@ -27,8 +27,6 @@ public class AddingMinistryFrame extends JFrame {
         JLabel dayLabel = new JLabel("Day");
         JLabel monthLabel = new JLabel("Month");
         JLabel yearLabel = new JLabel("Year");
-        JLabel usernameLabel = new JLabel("Username");
-        JLabel passwordLabel = new JLabel("Password");
         JLabel ministryIdLabel = new JLabel("Ministry ID");
 
         JTextField fnTxt = new JTextField();
@@ -39,8 +37,6 @@ public class AddingMinistryFrame extends JFrame {
         JTextField emailTxt = new JTextField();
         JTextField addressTxt = new JTextField();
         JTextField phoneTxt = new JTextField();
-        JTextField usernameTxt = new JTextField();
-        JTextField passwordTxt = new JTextField();
         JTextField ministryIdTxt = new JTextField();
 
         mainPanel.add(confirmBtn);
@@ -54,8 +50,6 @@ public class AddingMinistryFrame extends JFrame {
         mainPanel.add(dayLabel);
         mainPanel.add(monthLabel);
         mainPanel.add(yearLabel);
-        mainPanel.add(usernameLabel);
-        mainPanel.add(passwordLabel);
         mainPanel.add(ministryIdLabel);
         mainPanel.add(fnTxt);
         mainPanel.add(lnTxt);
@@ -65,8 +59,6 @@ public class AddingMinistryFrame extends JFrame {
         mainPanel.add(emailTxt);
         mainPanel.add(addressTxt);
         mainPanel.add(phoneTxt);
-        mainPanel.add(usernameTxt);
-        mainPanel.add(passwordTxt);
         mainPanel.add(ministryIdTxt);
         mainPanel.setLayout(null);
 
@@ -77,8 +69,6 @@ public class AddingMinistryFrame extends JFrame {
         addressLabel.setBounds(20, 140, 120, 25);
         phoneLabel.setBounds(20, 170, 120, 25);
         ministryIdLabel.setBounds(20, 200, 120, 25);
-        usernameLabel.setBounds(20, 230, 120, 25);
-        passwordLabel.setBounds(20, 260, 120, 25);
 
         fnTxt.setBounds(140, 20, 260, 25);
         lnTxt.setBounds(140, 50, 260, 25);
@@ -92,27 +82,33 @@ public class AddingMinistryFrame extends JFrame {
         addressTxt.setBounds(140, 140, 260, 25);
         phoneTxt.setBounds(140, 170, 260, 25);
         ministryIdTxt.setBounds(140, 200, 260, 25);
-        usernameTxt.setBounds(140, 230, 260, 25);
-        passwordTxt.setBounds(140, 260, 260, 25);
-        confirmBtn.setBounds(100, 300, 220, 30);
+        confirmBtn.setBounds(100, 240, 220, 30);
 
         this.add(mainPanel);
-        this.setSize(420, 390);
+        this.setSize(420, 330);
         this.setPreferredSize(new Dimension(this.getSize().width, this.getSize().height));
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
         confirmBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Ministry addMnt = new Ministry();
                 int change = 0;
+                Ministry temp = new Ministry();
+                Ministry editMnt = new Ministry();
+                for (Ministry item : listMnt) {
+                    if (item.getId() == editId) {
+                        temp = item;
+                        editMnt = item;
+                        break;
+                    }
+                }
                 if (!fnTxt.getText().equals("")) {
                     change++;
-                    addMnt.setFirstname(fnTxt.getText());
+                    editMnt.setFirstname(fnTxt.getText());
                 }
                 if (!lnTxt.getText().equals("")) {
                     change++;
-                    addMnt.setLastname(lnTxt.getText());
+                    editMnt.setLastname(lnTxt.getText());
                 }
                 if (!dayTxt.getText().equals("") && !monthTxt.getText().equals("") && !yearTxt.getText().equals("")) {
                     change++;
@@ -120,7 +116,7 @@ public class AddingMinistryFrame extends JFrame {
                         Integer.parseInt(dayTxt.getText());
                         Integer.parseInt(monthTxt.getText());
                         Integer.parseInt(yearTxt.getText());
-                        addMnt.setDayofbirth(Date.valueOf(yearTxt.getText() + "-" +
+                        editMnt.setDayofbirth(Date.valueOf(yearTxt.getText() + "-" +
                                 monthTxt.getText() + "-" + dayTxt.getText()));
 
                     } catch (NumberFormatException ex) {
@@ -129,33 +125,26 @@ public class AddingMinistryFrame extends JFrame {
                 }
                 if (!emailTxt.getText().equals("")) {
                     change++;
-                    addMnt.setEmail(emailTxt.getText());
+                    editMnt.setEmail(emailTxt.getText());
                 }
                 if (!addressTxt.getText().equals("")) {
                     change++;
-                    addMnt.setAddress(addressTxt.getText());
+                    editMnt.setAddress(addressTxt.getText());
                 }
                 if (!phoneTxt.getText().equals("")) {
                     change++;
-                    addMnt.setPhone(phoneTxt.getText());
-                }
-                if (!usernameTxt.getText().equals("")) {
-                    change++;
-                    addMnt.setUsername(usernameTxt.getText());
-                }
-                if (!passwordTxt.getText().equals("")) {
-                    change++;
-                    addMnt.setPassword(passwordTxt.getText());
+                    editMnt.setPhone(phoneTxt.getText());
                 }
                 if (!ministryIdTxt.getText().equals("")) {
                     change++;
-                    addMnt.setMinistryid(Integer.valueOf(ministryIdTxt.getText()));
+                    editMnt.setMinistryid(Integer.valueOf(ministryIdTxt.getText()));
                 }
-                if (change >= 9) {
-                    if (MinistryDAO.addMinistry(addMnt)) {
-                        ministries.add(addMnt);
+                if (change > 0) {
+                    if (MinistryDAO.updateMinistryAccount(editMnt)) {
+                        listMnt.remove(temp);
+                        listMnt.add(editMnt);
+                        panel.resetScrollPane(listMnt);
                         JOptionPane.showMessageDialog(confirmBtn, "Update success");
-                        panel.resetScrollPane(ministries);
                     }
                     else
                         JOptionPane.showMessageDialog(confirmBtn, "Update failed");
