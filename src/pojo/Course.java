@@ -5,7 +5,7 @@ public class Course {
     private String teacherName;
     private String classroom;
     private String dayOfWeek;
-    private String shift;
+    private int shift;
     private Semester semester;
     private Subject subject;
 
@@ -40,11 +40,11 @@ public class Course {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public String getShift() {
+    public int getShift() {
         return shift;
     }
 
-    public void setShift(String shift) {
+    public void setShift(int shift) {
         this.shift = shift;
     }
 

@@ -111,7 +111,6 @@ public class MinistryGUI extends JFrame {
                 mainPanel.setVisible(false);
                 JPanel semPnl = new MinistrySemesterPanel(mainPanel, currentSem);
                 add(semPnl);
-                System.out.println(currentSem[0].getId());
             }
         });
 
@@ -128,6 +127,14 @@ public class MinistryGUI extends JFrame {
                 mainPanel.setVisible(false);
                 JPanel stdPnl = new MinistryStudentPanel(mainPanel);
                 add(stdPnl);
+            }
+        });
+
+        courseRegistrationSessionBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.setVisible(false);
+                JPanel crsPnl = new MinistryCoursesRegistPanel(currentSem[0], mainPanel);
+                add(crsPnl);
             }
         });
     }

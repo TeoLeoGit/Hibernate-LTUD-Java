@@ -77,4 +77,37 @@ public class StudentDAO {
         }
         return students;
     }
+
+    public static List<Student> getAllStudent() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Student> students = null;
+        try {
+            //Create query
+            final String hql =  "select std from Student std";
+            Query query = session.createQuery(hql);
+            students = query.list();
+        } catch (HibernateException e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return students;
+    }
+
+    public static boolean addStudent(Student std) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.save(std);
+            transaction.commit();
+        } catch (HibernateException e) {
+            transaction.rollback();
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return true;
+    }
+
 }

@@ -1,6 +1,11 @@
+import dao.ClassDAO;
+
+import pojo.Class;
+import pojo.Student;
 import swing.*;
 
 import javax.swing.*;
+import java.util.Set;
 
 public class Main {
 
@@ -8,7 +13,13 @@ public class Main {
         JFrame frame = new LoginGUI();
         frame.setVisible(true);
 
-        //JFrame fram3 =  new MinistryGUI();
-        //fram3.setVisible(true);
+        /*Class test = ClassDAO.getClassById(5);
+        System.out.println(test.getClassId());
+        Set<Student> test2 = test.getStudents();
+        for (Student item : test.getStudents()) {
+            System.out.println(item.getId());
+            System.out.println(item.getClassroom().getClassname());
+            System.out.println(item.getClassroom().getClassId());
+        }*/
     }
 }

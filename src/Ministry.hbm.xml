@@ -38,7 +38,7 @@
         </property>
         <set inverse="true" name="createdCourses" >
             <key>
-                <column name="courseid" not-null="true"/>
+                <column name="ministryid" not-null="true"/>
             </key>
             <one-to-many class="pojo.CreatedCourseInfo"/>
         </set>

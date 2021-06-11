@@ -17,7 +17,7 @@
         </property>
         <set inverse="true" name="courses" >
             <key>
-                <column name="courseId" not-null="true"/>
+                <column name="subjectid" not-null="true"/>
             </key>
             <one-to-many class="pojo.Course"/>
         </set>

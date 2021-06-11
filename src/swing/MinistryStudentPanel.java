@@ -18,37 +18,44 @@ public class MinistryStudentPanel extends JPanel {
     private JButton backBtn;
     private JButton findStdBtn;
     private JButton addStdBtn;
+    private JButton stdRegSubject;
     private JTable dataTbl;
     private Set<Student> students;
+    private Class selectedClass;
     public MinistryStudentPanel(JPanel mainPanel) {
         backBtn = new JButton("Back to main");
         findStdBtn = new JButton("Find student");
-        addStdBtn = new JButton("Add new student");
+        addStdBtn = new JButton("Add new student to selected class");
+        stdRegSubject= new JButton("Student registered subject");
         JTextField searchBar = new JTextField();
         JLabel lbl = new JLabel("Student ID");
 
         //ComboBox list
         String[] classNameList;
-        List<Class> allClass = ClassDAO.getAllClasses();
-        classNameList = new String[allClass.size()];
+        List<Class> allClasses = ClassDAO.getAllClasses();
+        classNameList = new String[allClasses.size() + 1]; //last index is getting all student
         int i = 0;
-        for (Class item : allClass) {
+        for (Class item : allClasses) {
             classNameList[i] = item.getClassname();
             i++;
         }
+        classNameList[i] = "All students";
         JComboBox classListBox = new JComboBox(classNameList);
         //table data
-        //Class currentClass = allClass.get(0);
-        students = allClass.get(0).getStudents();
+        //Set default class to show students
+        selectedClass = allClasses.get(0);
+        students = selectedClass.getStudents();
+
         this.setDataTble();
         JScrollPane pane = new JScrollPane(dataTbl);
         pane.setBounds(20, 120, 860, 340);
         backBtn.setBounds(20, 10, 160, 35);
-        searchBar.setBounds(140, 55, 220, 25);
+        searchBar.setBounds(110, 55, 220, 25);
         lbl.setBounds(20, 55, 120, 25);
-        findStdBtn.setBounds(370, 55, 120, 25);
+        findStdBtn.setBounds(340, 55, 120, 25);
         addStdBtn.setBounds(578, 55, 300, 25);
-        classListBox.setBounds(20, 100, 220, 25);
+        stdRegSubject.setBounds(578, 90, 300, 25);
+        classListBox.setBounds(20, 90, 220, 25);
         this.setLayout(null);
 
         add(backBtn);
@@ -58,7 +65,7 @@ public class MinistryStudentPanel extends JPanel {
         add(lbl);
         add(pane);
         add(classListBox);
-        add(classListBox);
+        add(stdRegSubject);
 
         backBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -72,22 +79,46 @@ public class MinistryStudentPanel extends JPanel {
                 if (searchBar.getText().equals("")) {
                     JOptionPane.showMessageDialog(findStdBtn, "No data to search");
                 } else {
-                    List<Student> foundStds = StudentDAO.getStudentsByStudentId(Integer.valueOf(searchBar.getText()));
-                    Set<Student> founds = new HashSet<Student>(foundStds);
-                    students.addAll(founds);
-                    if (!foundStds.isEmpty()) {
-                        resetScrollPane();
-                    } else {
-                        JOptionPane.showMessageDialog(findStdBtn, "No result matched");
+                    try {
+                        List<Student> foundStds = StudentDAO.getStudentsByStudentId(Integer.valueOf(searchBar.getText()));
+                        Set<Student> founds = new HashSet<Student>(foundStds);
+                        students = founds;
+                        if (!foundStds.isEmpty()) {
+                            resetScrollPane();
+                        } else {
+                            JOptionPane.showMessageDialog(findStdBtn, "No result matched");
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(findStdBtn, "Invalid ID");
                     }
                 }
             }
         });
+
         MinistryStudentPanel panel = this;
         addStdBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //JFrame addMntFrame = new AddingMinistryFrame(ministries, panel);
-                //addMntFrame.setVisible(true);
+                if (selectedClass == null) {
+                    JOptionPane.showMessageDialog(addStdBtn, "Please select a class in combobox to add new student");
+                }
+                else {
+                    JFrame addStdFrame = new AddingStudentFrame(selectedClass, students, panel);
+                    addStdFrame.setVisible(true);
+                }
+            }
+        });
+
+        classListBox.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                if (classListBox.getSelectedIndex() < classListBox.getItemCount() - 1) {
+                    selectedClass = allClasses.get(classListBox.getSelectedIndex());
+                    students = selectedClass.getStudents();
+                }
+                else {
+                    students = new HashSet<Student>(StudentDAO.getAllStudent());
+                    selectedClass = null;
+                }
+                resetScrollPane();
             }
         });
     }
@@ -117,7 +148,7 @@ public class MinistryStudentPanel extends JPanel {
                 int index = dataTbl.getSelectedRow();
                 if (index != -1) {
                     try {
-                        int resetId = Integer.parseInt((String) dataTbl.getValueAt(index, 0)) ;
+                        int resetId = Integer.parseInt((dataTbl.getValueAt(index, 1).toString()));
                         Student resetStd = StudentDAO.getStudentById(resetId);
                         resetStd.setPassword(String.valueOf(resetStd.getStudentId()));
                         if (StudentDAO.updateStudentAccount(resetStd)) {
@@ -138,9 +169,9 @@ public class MinistryStudentPanel extends JPanel {
                 int index = dataTbl.getSelectedRow();
                 if (index != -1) {
                     try {
-                        //int editId = Integer.parseInt((String) dataTbl.getValueAt(index, 0)) ;
-                        //JFrame editFrame = new EditMinistryFrame(ministries, editId, panel);
-                        //editFrame.setVisible(true);
+                        int editId = Integer.parseInt(dataTbl.getValueAt(index, 1).toString());
+                        JFrame editFrame = new EditStudentFrame(selectedClass, students, editId, panel);
+                        editFrame.setVisible(true);
                     }
                     catch (NumberFormatException ex) {
                         JOptionPane.showMessageDialog(editCell.getBtn(), "Number format exception");
