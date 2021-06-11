@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="pojo.Class" table="classes" schema="coursesregistrationdb">
+        <id name="classId">
+            <column name="classid" sql-type="int unsigned"/>
+            <generator class="increment" />
+        </id>
+        <property name="classname">
+            <column name="classname" sql-type="varchar(30)" length="30"/>
+        </property>
+        <property name="numberOfStudent">
+            <column name="numberofstudent" sql-type="int" not-null="false"/>
+        </property>
+        <property name="maleNumber">
+            <column name="males" sql-type="int" not-null="false"/>
+        </property>
+        <property name="femaleNumber">
+            <column name="females" sql-type="int" not-null="false"/>
+        </property>
+        <set inverse="true" name="students"
+             fetch="join" lazy="false">
+            <key>
+                <column name="id" not-null="true"/>
+            </key>
+            <one-to-many class="pojo.Student"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -14,6 +14,24 @@ public class Student {
     private String email;
     private String address;
     private String phone;
+    private String gender;
+    private Class classroom;
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Class getClassroom() {
+        return classroom;
+    }
+
+    public void setClassroom(Class classroom) {
+        this.classroom = classroom;
+    }
 
     public int getId() {
         return id;

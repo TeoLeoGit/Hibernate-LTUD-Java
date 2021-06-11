@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class MinistrySemesterPanel extends JPanel {
@@ -28,6 +29,7 @@ public class MinistrySemesterPanel extends JPanel {
         addSemBtn = new JButton("Add new semester");
         JTextField searchBar = new JTextField();
         JLabel lbl = new JLabel("Semester name");
+        setCurrentSem = currentSem[0];
 
         //table data
         List<Semester> semesters = SemesterDAO.getAllSemester();
@@ -111,7 +113,7 @@ public class MinistrySemesterPanel extends JPanel {
                                 JOptionPane.showMessageDialog(setCell.getBtn(), "Current semester is set");
                             }
                             else
-                                JOptionPane.showMessageDialog(setCell.getBtn(), "Cannot set ended semester to " +
+                                JOptionPane.showMessageDialog(setCell.getBtn(), "Cannot set ended semester as " +
                                         "current semester");
                         }
                         catch (ParseException pe) {
@@ -132,17 +134,31 @@ public class MinistrySemesterPanel extends JPanel {
                     int modelIndex = dataTbl.convertRowIndexToModel(index);
                     try {
                         int deleteId = Integer.parseInt(dataTbl.getValueAt(index, 0).toString());
-                        if (SemesterDAO.deleteSemester(deleteId)) {
-                            JOptionPane.showMessageDialog(deleteCell.getBtn(), "Deleted semester with ID " + String.valueOf(deleteId));
+                        if (setCurrentSem.getId() == deleteId) {
+                            JOptionPane.showMessageDialog(deleteCell.getBtn(), "Cannot delete semester set as " +
+                                    " current semester");
                         }
-                        else
-                            JOptionPane.showMessageDialog(deleteCell.getBtn(), "Failed to delete semester");
+                        else {
+                            for (Iterator<Semester> iter = semList.listIterator(); iter.hasNext(); ) {
+                                Semester a = iter.next();
+                                if (a.getId() == deleteId) {
+                                    iter.remove();
+                                    break;
+                                }
+                            }
+                            if (SemesterDAO.deleteSemester(deleteId)) {
+                                JOptionPane.showMessageDialog(deleteCell.getBtn(), "Deleted semester with ID " + String.valueOf(deleteId));
+                                DefaultTableModel model = (DefaultTableModel) dataTbl.getModel();
+                                model.removeRow(modelIndex);
+                            } else {
+                                semList.add(SemesterDAO.getSemesterById(deleteId));
+                                JOptionPane.showMessageDialog(deleteCell.getBtn(), "Failed to delete semester");
+                            }
+                        }
                     }
                     catch (NumberFormatException ex) {
                         JOptionPane.showMessageDialog(deleteCell.getBtn(), "Number format exception");
                     }
-                    DefaultTableModel model = (DefaultTableModel) dataTbl.getModel();
-                    model.removeRow(modelIndex);
                 }
             }
         });
@@ -162,7 +178,4 @@ public class MinistrySemesterPanel extends JPanel {
         revalidate();
         repaint();
     }
-
-
-
 }

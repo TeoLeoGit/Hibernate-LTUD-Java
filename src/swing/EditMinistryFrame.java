@@ -143,7 +143,7 @@ public class EditMinistryFrame extends JFrame {
                     if (MinistryDAO.updateMinistryAccount(editMnt)) {
                         listMnt.remove(temp);
                         listMnt.add(editMnt);
-                        panel.resetScrollPane(listMnt);
+                        panel.resetScrollPane();
                         JOptionPane.showMessageDialog(confirmBtn, "Update success");
                         dispose();
                     }

@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.List;
 
 public class MinistrySubjectPanel extends JPanel {
@@ -109,18 +110,27 @@ public class MinistrySubjectPanel extends JPanel {
                 if (index != -1) {
                     int modelIndex = dataTbl.convertRowIndexToModel(index);
                     try {
-                        int deleteId = Integer.parseInt(dataTbl.getValueAt(index, 0).toString()) ;
+                        int deleteId = Integer.parseInt(dataTbl.getValueAt(index, 0).toString());
+                        for (Iterator<Subject> iter = subjects.listIterator(); iter.hasNext(); ) {
+                            Subject a = iter.next();
+                            if (a.getId() == deleteId) {
+                                iter.remove();
+                                break;
+                            }
+                        }
                         if (SubjectDAO.deleteSubject(deleteId)) {
                             JOptionPane.showMessageDialog(deleteCell.getBtn(), "Deleted subject with ID " + String.valueOf(deleteId));
+                            DefaultTableModel model = (DefaultTableModel) dataTbl.getModel();
+                            model.removeRow(modelIndex);
                         }
-                        else
+                        else {
+                            subjects.add(SubjectDAO.getSubjectById(deleteId));
                             JOptionPane.showMessageDialog(deleteCell.getBtn(), "Failed to delete subject");
+                        }
                     }
                     catch (NumberFormatException ex) {
                         JOptionPane.showMessageDialog(deleteCell.getBtn(), "Number format exception");
                     }
-                    DefaultTableModel model = (DefaultTableModel) dataTbl.getModel();
-                    model.removeRow(modelIndex);
                 }
             }
         });

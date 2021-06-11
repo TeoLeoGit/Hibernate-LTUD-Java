@@ -27,6 +27,8 @@
         <mapping class="pojo.Student"/>
         <mapping resource="Subject.hbm.xml"/>
         <mapping class="pojo.Subject"/>
+        <mapping resource="Class.hbm.xml"/>
+        <mapping class="pojo.Class"/>
         <!-- <property name="connection.username"/> -->
         <!-- <property name="connection.password"/> -->
 

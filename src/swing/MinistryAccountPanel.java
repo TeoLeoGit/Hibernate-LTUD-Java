@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.List;
 
 public class MinistryAccountPanel extends JPanel {
@@ -15,6 +16,7 @@ public class MinistryAccountPanel extends JPanel {
     private JButton findMntBtn;
     private JButton addMntBtn;
     private JTable dataTbl;
+    private List<Ministry> ministries;
     public MinistryAccountPanel(JPanel mainPanel) {
         backBtn = new JButton("Back to main");
         findMntBtn = new JButton("Find ministry");
@@ -23,8 +25,8 @@ public class MinistryAccountPanel extends JPanel {
         JLabel lbl = new JLabel("Ministry firstname");
 
         //table data
-        List<Ministry> ministries = MinistryDAO.getAllMinistries();
-        this.setDataTble(ministries);
+        ministries = MinistryDAO.getAllMinistries();
+        this.setDataTble();
         JScrollPane pane  = new JScrollPane(dataTbl);
         pane.setBounds(20, 100, 860,320);
 
@@ -52,7 +54,7 @@ public class MinistryAccountPanel extends JPanel {
                 else {
                     List<Ministry> foundMnts = MinistryDAO.getMinistriesByFirstname(searchBar.getText());
                     if(!foundMnts.isEmpty()) {
-                        resetScrollPane(foundMnts);
+                        resetScrollPane();
                     }
                     else {
                         JOptionPane.showMessageDialog(findMntBtn, "No result matched");
@@ -69,7 +71,7 @@ public class MinistryAccountPanel extends JPanel {
         });
     }
 
-    public void setDataTble(List<Ministry> ministries) {
+    public void setDataTble() {
         String column[]={"ACCOUNT ID", "MINISTRY ID", "FIRSTNAME","LASTNAME", "DAY OF BIRTH", "EMAIL", "ADDRESS", "PHONE", "EDIT", "DELETE",
             "RESET PWD"};
         DefaultTableModel model = new DefaultTableModel(column, 0);
@@ -99,18 +101,27 @@ public class MinistryAccountPanel extends JPanel {
                 if (index != -1) {
                     int modelIndex = dataTbl.convertRowIndexToModel(index);
                     try {
-                        int deleteId = Integer.parseInt((String) dataTbl.getValueAt(index, 0)) ;
+                        int deleteId = Integer.parseInt(dataTbl.getValueAt(index, 0).toString());
+                        for (Iterator<Ministry> iter = ministries.listIterator(); iter.hasNext(); ) {
+                            Ministry a = iter.next();
+                            if (a.getId() == deleteId) {
+                                iter.remove();
+                                break;
+                            }
+                        }
                         if (MinistryDAO.deleteMinistry(deleteId)) {
                             JOptionPane.showMessageDialog(deleteCell.getBtn(), "Deleted ministry with ID " + String.valueOf(deleteId));
+                            DefaultTableModel model = (DefaultTableModel) dataTbl.getModel();
+                            model.removeRow(modelIndex);
                         }
-                        else
+                        else {
+                            ministries.add(MinistryDAO.getMinistryById(deleteId));
                             JOptionPane.showMessageDialog(deleteCell.getBtn(), "Failed to delete ministry");
+                        }
                     }
                     catch (NumberFormatException ex) {
                         JOptionPane.showMessageDialog(deleteCell.getBtn(), "Number format exception");
                     }
-                    DefaultTableModel model = (DefaultTableModel) dataTbl.getModel();
-                    model.removeRow(modelIndex);
                 }
             }
         });
@@ -153,14 +164,14 @@ public class MinistryAccountPanel extends JPanel {
         });
     }
 
-    public void resetScrollPane(List<Ministry> mnts) {
+    public void resetScrollPane() {
         Component[] components = getComponents();
         for (Component component : components) {
             if (component.getClass().equals(JScrollPane.class)) {
                 remove(component);
             }
         }
-        setDataTble(mnts);
+        setDataTble();
         JScrollPane newPane = new JScrollPane(dataTbl);
         newPane.setBounds(20, 100, 860,320);
         add(newPane);

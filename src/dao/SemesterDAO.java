@@ -12,18 +12,18 @@ import java.util.List;
 public class SemesterDAO {
     public static List<Semester> getAllSemester() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Semester> subjects = null;
+        List<Semester> semesters = null;
         try {
             //Create query
             final String hql =  "select sem from Semester sem";
             Query query = session.createQuery(hql);
-            subjects = query.list();
+            semesters = query.list();
         } catch (HibernateException e) {
             System.err.println(e);
         } finally {
             session.close();
         }
-        return subjects;
+        return semesters;
     }
 
     public static List<Semester> getSemestersByName(String semestername) {

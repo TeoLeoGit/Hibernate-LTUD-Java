@@ -35,5 +35,12 @@
         <property name="phone">
             <column name="phone" sql-type="char(10)" length="10" not-null="true"/>
         </property>
+        <property name="gender">
+            <column name="gender" sql-type="varchar(10)" length="10" not-null="false"/>
+        </property>
+        <many-to-one class="pojo.Class" name="classroom"
+                     fetch="join" lazy="false" cascade="save-update, delete">
+            <column name="classid" not-null="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>
