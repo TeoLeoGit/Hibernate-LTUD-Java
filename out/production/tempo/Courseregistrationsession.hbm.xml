@@ -7,6 +7,7 @@
     <class name="pojo.Courseregistrationsession" table="courseregistrationsession" schema="coursesregistrationdb">
         <id name="id">
             <column name="id" sql-type="int unsigned"/>
+            <generator class="increment" />
         </id>
         <property name="startdate">
             <column name="startdate" sql-type="date"/>

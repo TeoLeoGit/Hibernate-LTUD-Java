@@ -80,7 +80,6 @@ public class LoginGUI extends JFrame {
                                 JFrame ministryGUI = new MinistryGUI(item);
                                 ministryGUI .setVisible(true);
                                 dispose();
-
                                 break;
                             }
                             else
@@ -96,8 +95,12 @@ public class LoginGUI extends JFrame {
                 else
                     for (Student item : students) {
                         if (item.getUsername().equals(studentUsernameText.getText()))
-                            if (item.getPassword().equals(studentPasswordText.getText()))
-                                JOptionPane.showMessageDialog(studentLogin, "Student loggin");
+                            if (item.getPassword().equals(studentPasswordText.getText())) {
+                                JFrame studentGUI = new StudentGUI(item);
+                                studentGUI.setVisible(true);
+                                dispose();
+                                break;
+                            }
                             else
                                 JOptionPane.showMessageDialog(studentLogin, "Incorrect password student");
                     }

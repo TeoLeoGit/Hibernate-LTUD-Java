@@ -7,6 +7,7 @@
     <class name="pojo.Course" table="courses" schema="coursesregistrationdb">
         <id name="Id">
             <column name="courseId" sql-type="int unsigned"/>
+            <generator class="increment" />
         </id>
         <property name="teacherName">
             <column name="teachername" sql-type="varchar(30)" not-null="true"/>
@@ -20,13 +21,26 @@
         <property name="shift">
             <column name="shift" sql-type="int unsigned"/>
         </property>
+        <property name="maxAttendant">
+            <column name="max_attendant" sql-type="int unsigned"/>
+        </property>
+        <property name="Attendant">
+            <column name="attendant" sql-type="int unsigned"/>
+        </property>
         <many-to-one class="pojo.Semester" name="semester"
-                     fetch="join" lazy="false" cascade="save-update, delete">
+                     fetch="join" lazy="false">
             <column name="semester" not-null="true"/>
         </many-to-one>
         <many-to-one class="pojo.Subject" name="subject"
-                     fetch="join" lazy="false" cascade="save-update, delete">
+                     fetch="join" lazy="false">
             <column name="subjectid" not-null="true"/>
         </many-to-one>
+        <set inverse="true" name="coursesregistrations"
+             fetch="join" lazy="false">
+            <key>
+                <column name="courseId" not-null="true"/>
+            </key>
+            <one-to-many class="pojo.Coursesregistration"/>
+        </set>
     </class>
 </hibernate-mapping>

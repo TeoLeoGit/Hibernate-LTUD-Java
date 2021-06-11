@@ -59,7 +59,7 @@ public class AddingClassFrame extends JFrame {
                     else
                         JOptionPane.showMessageDialog(confirmBtn, "Update failed");
                 } else
-                    JOptionPane.showMessageDialog(confirmBtn, "Please give the class a name");
+                    JOptionPane.showMessageDialog(confirmBtn, "Please fill in all the field");
             }
         });
     }

@@ -1,5 +1,8 @@
 package pojo;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Course {
     private int Id;
     private String teacherName;
@@ -8,6 +11,33 @@ public class Course {
     private int shift;
     private Semester semester;
     private Subject subject;
+    private Set<Coursesregistration> coursesregistrations = new HashSet<Coursesregistration>(0);
+    private int maxAttendant;
+    private int Attendant;
+
+    public int getAttendant() {
+        return Attendant;
+    }
+
+    public void setAttendant(int attendant) {
+        Attendant = attendant;
+    }
+
+    public int getMaxAttendant() {
+        return maxAttendant;
+    }
+
+    public void setMaxAttendant(int maxAttendant) {
+        this.maxAttendant = maxAttendant;
+    }
+
+    public Set<Coursesregistration> getCoursesregistrations() {
+        return coursesregistrations;
+    }
+
+    public void setCoursesregistrations(Set<Coursesregistration> coursesregistrations) {
+        this.coursesregistrations = coursesregistrations;
+    }
 
     public int getId() {
         return Id;

@@ -99,7 +99,6 @@ public class AddingSessionFrame extends JFrame {
                 if (change >= 2) {
                     currentSem.setSemesteryear(parts[0]);
                     addSession.setSemester(currentSem);
-                    System.out.println(currentSem.getSemesteryear());
                     if (CourseRegistrationSessionDAO.addSession(addSession)) {
 
                         sessions.add(addSession);

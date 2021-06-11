@@ -137,5 +137,13 @@ public class MinistryGUI extends JFrame {
                 add(crsPnl);
             }
         });
+        
+        courseBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.setVisible(false);
+                JPanel coursePnl = new MinistryCoursePanel(currentSem, mainPanel);
+                add(coursePnl);
+            }
+        });
     }
 }
