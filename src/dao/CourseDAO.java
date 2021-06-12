@@ -74,4 +74,23 @@ public class CourseDAO {
         }
         return course;
     }
+
+    public static boolean updateCourse(Course updateCourse) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        if (CourseDAO.getCourseById(updateCourse.getId()) == null) {
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(updateCourse);
+            transaction.commit();
+        } catch (HibernateException e) {
+            transaction.rollback();
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return true;
+    }
 }

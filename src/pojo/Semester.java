@@ -31,13 +31,6 @@ public class Semester {
         this.coursesRegSession = coursesRegSession;
     }
 
-    public Set<Courseregistrationsession> getCourses() {
-        return coursesRegSession;
-    }
-
-    public void setCourses(Set<Courseregistrationsession> coursesRegSession) {
-        this.coursesRegSession = coursesRegSession;
-    }
 
     public int getId() {
         return id;

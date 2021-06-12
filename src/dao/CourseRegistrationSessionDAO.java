@@ -7,6 +7,9 @@ import org.hibernate.query.Query;
 import pojo.Courseregistrationsession;
 import util.HibernateUtil;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class CourseRegistrationSessionDAO {
@@ -42,5 +45,25 @@ public class CourseRegistrationSessionDAO {
         return true;
     }
 
-
+    public static List<Courseregistrationsession> getOpeningSession() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Courseregistrationsession> sessions = null;
+        try {
+            //Create query
+            SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+            Date getToday = java.util.Calendar.getInstance().getTime();
+            String today = sdformat.format(getToday);
+            final String hql =  "from Courseregistrationsession crs where day(crs.startdate) <= day(:today) and day(crs.enddate) >= day(:today)" +
+                    "and month(crs.startdate) <= month(:today) and month(crs.enddate) >= month(:today)" +
+                    "and year(crs.startdate) <= year(:today) and year(crs.enddate) >= year(:today)";
+            Query query = session.createQuery(hql);
+            query.setParameter("today", today);
+            sessions = query.list();
+        } catch (HibernateException e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return sessions;
+    }
 }

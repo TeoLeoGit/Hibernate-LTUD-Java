@@ -32,11 +32,11 @@
             <column name="semester" not-null="true"/>
         </many-to-one>
         <many-to-one class="pojo.Subject" name="subject"
-                     fetch="join" lazy="false">
+                     fetch="join" lazy="false" cascade="all">
             <column name="subjectid" not-null="true"/>
         </many-to-one>
         <set inverse="true" name="coursesregistrations"
-             fetch="join" lazy="false">
+             fetch="join" lazy="false" >
             <key>
                 <column name="courseId" not-null="true"/>
             </key>

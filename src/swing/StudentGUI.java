@@ -1,5 +1,7 @@
 package swing;
 
+import dao.CourseRegistrationSessionDAO;
+import pojo.Courseregistrationsession;
 import pojo.Student;
 import pojo.Semester;
 
@@ -7,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class StudentGUI extends JFrame {
     private JButton logOut;
@@ -25,6 +28,12 @@ public class StudentGUI extends JFrame {
         changeInfo = new JButton("Change info");
         logOut = new JButton("Log out");
 
+        //Get opening Registration session
+        final Courseregistrationsession[] openingSession = {new Courseregistrationsession()};
+        for (Courseregistrationsession item : CourseRegistrationSessionDAO.getOpeningSession()) {
+            openingSession[0] = item;
+            break;
+        }
         //Drawing GUI
         mainPanel.setLayout(null);
         registrationBtn.setBounds(35, 50, 180, 40);
@@ -72,16 +81,16 @@ public class StudentGUI extends JFrame {
         registrationBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainPanel.setVisible(false);
-                JPanel ministryAccountPnl = new MinistryAccountPanel(mainPanel);
-                add(ministryAccountPnl);
+                JPanel studentRegistrationPnl = new StudentRegistrationPanel(mainPanel, openingSession, student);
+                add(studentRegistrationPnl);
             }
         });
 
         checkRegistrationBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainPanel.setVisible(false);
-                JPanel subjectPnl = new MinistrySubjectPanel(mainPanel);
-                add(subjectPnl);
+                JPanel enrolledCrsPnl = new StudentEnrolledCoursePanel(mainPanel, student, openingSession);
+                add(enrolledCrsPnl);
             }
         });
     }
