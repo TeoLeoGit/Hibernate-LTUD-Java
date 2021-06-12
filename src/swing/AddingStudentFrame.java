@@ -1,5 +1,6 @@
 package swing;
 
+import dao.ClassDAO;
 import dao.StudentDAO;
 import pojo.Student;
 import pojo.Class;
@@ -148,6 +149,14 @@ public class AddingStudentFrame extends JFrame {
                         addStd.setPassword(studentIdTxt.getText());
                         if (StudentDAO.addStudent(addStd)) {
                             students.add(addStd);
+                            selectedClass.setNumberOfStudent(selectedClass.getNumberOfStudent() + 1);
+                            if (addStd.getGender().equals("Female")) {
+                                selectedClass.setFemaleNumber(selectedClass.getFemaleNumber() + 1);
+                            }
+                            if (addStd.getGender().equals("Male")) {
+                                selectedClass.setMaleNumber((selectedClass.getMaleNumber() + 1));
+                            }
+                            ClassDAO.updateClass(selectedClass);
                             JOptionPane.showMessageDialog(confirmBtn, "Update success" +
                                     "/nStudent account's username and password are set to student ID");
                             selectedClass.getStudents().add(addStd);

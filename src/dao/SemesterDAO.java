@@ -7,6 +7,8 @@ import org.hibernate.query.Query;
 import pojo.Semester;
 import util.HibernateUtil;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class SemesterDAO {
@@ -90,5 +92,26 @@ public class SemesterDAO {
             session.close();
         }
         return true;
+    }
+
+    public static List<Semester> getCurrentSemester() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Semester> semesters = null;
+        try {
+            SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+            Date getToday = java.util.Calendar.getInstance().getTime();
+            String today = sdformat.format(getToday);
+            final String hql =  "from Semester sem where day(sem.startdate) <= day(:today) and day(sem.enddate) >= day(:today)" +
+                    "and month(sem.startdate) <= month(:today) and month(sem.enddate) >= month(:today)" +
+                    "and year(sem.startdate) <= year(:today) and year(sem.enddate) >= year(:today)";
+            Query query = session.createQuery(hql);
+            query.setParameter("today", today);
+            semesters = query.list();
+        } catch (HibernateException e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return semesters;
     }
 }

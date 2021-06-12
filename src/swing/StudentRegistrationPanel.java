@@ -87,20 +87,43 @@ public class StudentRegistrationPanel extends JPanel {
                         Date now = java.util.Calendar.getInstance().getTime();
                         String today = sdformat.format(now);
                         newRegistration.setRegisterdate(java.sql.Date.valueOf(today));
-                        if (CourseRegistrationDAO.addCourseRegistration(newRegistration)) {
-                            enrollCourse.setAttendant(enrollCourse.getAttendant() + 1);
-                            if (CourseDAO.updateCourse(enrollCourse)) {
-                                courses.set(i, enrollCourse);
-                                Set<Course> updateCourses = new HashSet<>(courses);
-                                regisSession.getSemester().setSemCourses(updateCourses);
-                                JOptionPane.showMessageDialog(enrollCell.getBtn(), "Enrolled ");
-                                dataTbl.setValueAt(enrollCourse.getAttendant(), index, 8);
+
+                        //Kiem tra dang ky khong trung lap va qua 8 mon
+                        int noCollision = 0;
+                        int maxCourse = 0;
+                        List<Coursesregistration> checkCollision = CourseRegistrationDAO.getCrByStudent(loginStudent);
+                        for (Coursesregistration item : checkCollision) {
+                            if(item.getCourse().getShift() == enrollCourse.getShift()
+                                    && item.getCourse().getDayOfWeek().equals(enrollCourse.getDayOfWeek())) {
+                                noCollision = 1;
+                                break;
+                            }
+                        }
+                        for (Coursesregistration item : checkCollision) {
+                            if(item.getCourse().getSemester().getId() == regisSession.getSemester().getId()) {
+                                maxCourse++;
+                            }
+                        }
+                        System.out.println(maxCourse);
+                        System.out.println(noCollision);
+                        if(noCollision == 0 && maxCourse < 9 && enrollCourse.getAttendant() < enrollCourse.getMaxAttendant()) {
+                            if (CourseRegistrationDAO.addCourseRegistration(newRegistration)) {
+                                enrollCourse.setAttendant(enrollCourse.getAttendant() + 1);
+                                if (CourseDAO.updateCourse(enrollCourse)) {
+                                    courses.set(i, enrollCourse);
+                                    Set<Course> updateCourses = new HashSet<>(courses);
+                                    regisSession.getSemester().setSemCourses(updateCourses);
+                                    JOptionPane.showMessageDialog(enrollCell.getBtn(), "Enrolled ");
+                                    dataTbl.setValueAt(enrollCourse.getAttendant(), index, 8);
+                                } else {
+                                    JOptionPane.showMessageDialog(enrollCell.getBtn(), "Failed to update");
+                                }
                             } else {
-                                JOptionPane.showMessageDialog(enrollCell.getBtn(), "Failed to update");
+                                JOptionPane.showMessageDialog(enrollCell.getBtn(), "You have already enrolled this course");
                             }
                         }
                         else {
-                            JOptionPane.showMessageDialog(enrollCell.getBtn(), "You have already enrolled this course");
+                            JOptionPane.showMessageDialog(enrollCell.getBtn(), "Maximum courses/attendant allow or collision occur in schedule");
                         }
                     }
                     catch (NumberFormatException ex) {

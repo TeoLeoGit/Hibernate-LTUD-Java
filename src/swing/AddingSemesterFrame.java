@@ -114,14 +114,17 @@ public class AddingSemesterFrame extends JFrame {
                     }
                 }
                 if (change >= 3) {
-                    if (SemesterDAO.addSemester(addSem)) {
-                        semesters.add(addSem);
-                        JOptionPane.showMessageDialog(confirmBtn, "Update success");
-                        panel.resetScrollPane(semesters);
-                        dispose();
+                    if(addSem.getStartdate().compareTo(addSem.getEnddate()) < 0) {
+                        if (SemesterDAO.addSemester(addSem)) {
+                            semesters.add(addSem);
+                            JOptionPane.showMessageDialog(confirmBtn, "Update success");
+                            panel.resetScrollPane(semesters);
+                            dispose();
+                        } else
+                            JOptionPane.showMessageDialog(confirmBtn, "Update failed");
                     }
                     else
-                        JOptionPane.showMessageDialog(confirmBtn, "Update failed");
+                        JOptionPane.showMessageDialog(confirmBtn, "Semester must start before it end");
                 } else
                     JOptionPane.showMessageDialog(confirmBtn, "Please fill in all the fields");
             }

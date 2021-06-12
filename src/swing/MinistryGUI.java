@@ -1,4 +1,7 @@
 package swing;
+import dao.CourseRegistrationSessionDAO;
+import dao.SemesterDAO;
+import pojo.Courseregistrationsession;
 import pojo.Ministry;
 import pojo.Semester;
 
@@ -73,6 +76,10 @@ public class MinistryGUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         final Semester[] currentSem = {new Semester()};
+        for (Semester item : SemesterDAO.getCurrentSemester()) {
+            currentSem[0] = item;
+            break;
+        }
         //event handle
         changeInfo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

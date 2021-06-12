@@ -94,14 +94,14 @@ public class MinistryClassPanel extends JPanel {
                     int modelIndex = dataTbl.convertRowIndexToModel(index);
                     try {
                         int deleteId = Integer.parseInt(dataTbl.getValueAt(index, 0).toString());
-                        for (Iterator<Class> iter = classes.listIterator(); iter.hasNext(); ) {
-                            Class a = iter.next();
-                            if (a.getClassId() == deleteId) {
-                                iter.remove();
-                                break;
-                            }
-                        }
                         if (ClassDAO.deleteClass(deleteId)) {
+                            for (Iterator<Class> iter = classes.listIterator(); iter.hasNext(); ) {
+                                Class a = iter.next();
+                                if (a.getClassId() == deleteId) {
+                                    iter.remove();
+                                    break;
+                                }
+                            }
                             JOptionPane.showMessageDialog(deleteCell.getBtn(), "Deleted class with ID " + String.valueOf(deleteId));
                             DefaultTableModel model = (DefaultTableModel) dataTbl.getModel();
                             model.removeRow(modelIndex);

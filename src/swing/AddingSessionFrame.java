@@ -99,15 +99,18 @@ public class AddingSessionFrame extends JFrame {
                 if (change >= 2) {
                     currentSem.setSemesteryear(parts[0]);
                     addSession.setSemester(currentSem);
-                    if (CourseRegistrationSessionDAO.addSession(addSession)) {
+                    if(addSession.getStartdate().compareTo(addSession.getEnddate()) < 0) {
+                        if (CourseRegistrationSessionDAO.addSession(addSession)) {
 
-                        sessions.add(addSession);
-                        JOptionPane.showMessageDialog(confirmBtn, "Update success");
-                        panel.resetScrollPane();
-                        dispose();
+                            sessions.add(addSession);
+                            JOptionPane.showMessageDialog(confirmBtn, "Update success");
+                            panel.resetScrollPane();
+                            dispose();
+                        } else
+                            JOptionPane.showMessageDialog(confirmBtn, "Update failed");
                     }
                     else
-                        JOptionPane.showMessageDialog(confirmBtn, "Update failed");
+                        JOptionPane.showMessageDialog(confirmBtn, "Session must start before it end");
                 } else
                     JOptionPane.showMessageDialog(confirmBtn, "Please fill in all the fields");
             }

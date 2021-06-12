@@ -108,4 +108,23 @@ public class ClassDAO {
         }
         return classes;
     }
+
+    public static boolean updateClass(Class updateClass) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        if (ClassDAO.getClassById(updateClass.getClassId()) == null) {
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(updateClass);
+            transaction.commit();
+        } catch (HibernateException e) {
+            transaction.rollback();
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return true;
+    }
 }
