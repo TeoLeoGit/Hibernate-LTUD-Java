@@ -65,9 +65,9 @@ public class MinistryDAO {
         List<Ministry> ministries = null;
         try {
             //Create query
-            final String hql =  "from Ministry mnt where mnt.firstname = :firstname";
+            final String hql =  "from Ministry mnt where mnt.firstname like :firstname";
             Query query = session.createQuery(hql);
-            query.setParameter("firstname", firstname);
+            query.setParameter("firstname", "%" + firstname + "%");
             ministries = query.list();
         } catch (HibernateException e) {
             System.err.println(e);

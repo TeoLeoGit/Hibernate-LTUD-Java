@@ -56,8 +56,8 @@ public class MinistryClassPanel extends JPanel {
                 if (searchBar.getText().equals("")) {
                     JOptionPane.showMessageDialog(findClassBtn, "No data to search");
                 } else {
-                    List<Class> foundSems = ClassDAO.getClassesByName(searchBar.getText());
-                    if (!foundSems.isEmpty()) {
+                    classes = ClassDAO.getClassesByName(searchBar.getText());
+                    if (!classes.isEmpty()) {
                         resetScrollPane();
                     } else {
                         JOptionPane.showMessageDialog(findClassBtn, "No result matched");

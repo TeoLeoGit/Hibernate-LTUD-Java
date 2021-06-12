@@ -52,8 +52,8 @@ public class MinistryAccountPanel extends JPanel {
                     JOptionPane.showMessageDialog(findMntBtn, "No data to search");
                 }
                 else {
-                    List<Ministry> foundMnts = MinistryDAO.getMinistriesByFirstname(searchBar.getText());
-                    if(!foundMnts.isEmpty()) {
+                    ministries = MinistryDAO.getMinistriesByFirstname(searchBar.getText());
+                    if(!ministries.isEmpty()) {
                         resetScrollPane();
                     }
                     else {
