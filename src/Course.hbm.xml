@@ -36,7 +36,7 @@
             <column name="subjectid" not-null="true"/>
         </many-to-one>
         <set inverse="true" name="coursesregistrations"
-             fetch="join" lazy="false" >
+             fetch="join" lazy="false" cascade="save-update, delete">
             <key>
                 <column name="courseId" not-null="true"/>
             </key>

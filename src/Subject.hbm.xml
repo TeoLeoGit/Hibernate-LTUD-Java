@@ -16,7 +16,7 @@
             <column name="credits" sql-type="int unsigned" not-null="true"/>
         </property>
         <set inverse="true" name="courses"
-             fetch="join" lazy="false" >
+             fetch="join" lazy="false" cascade="save-update, delete">
             <key>
                 <column name="subjectid" not-null="true"/>
             </key>

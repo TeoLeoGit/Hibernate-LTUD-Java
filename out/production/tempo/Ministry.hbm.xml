@@ -36,7 +36,7 @@
         <property name="phone">
             <column name="phone" sql-type="char(10)" length="10" not-null="true"/>
         </property>
-        <set inverse="true" name="createdCourses" >
+        <set inverse="true" name="createdCourses">
             <key>
                 <column name="ministryid" not-null="true"/>
             </key>
